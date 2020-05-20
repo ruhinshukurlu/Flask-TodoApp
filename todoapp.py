@@ -1,5 +1,8 @@
 from flask import Flask,render_template
+from forms import RegisterForm, LoginForm
 app = Flask(__name__)
+
+app.config['SECRET_KEY'] = 'fct5hvxkmJkyKZfePxZ3EAW' 
 
 tasks = [
     {
@@ -25,6 +28,16 @@ tasks = [
 @app.route('/')
 def task():
     return render_template('tasks.html', tasks = tasks)
+
+@app.route('/register')
+def register():
+    form = RegisterForm()
+    return render_template('accounts/register.html', form=form)
+
+@app.route('/login')
+def login():
+    form = LoginForm()
+    return render_template('accounts/login.html',form = form)
 
 @app.route('/about')
 def about():
