@@ -6,10 +6,7 @@
 
 {% block content %}
     <form method="POST" action="">
-        <div class="form-group">
-            {{ form.username.label }}
-            {{ form.username(class = 'form-control') }}
-        </div>
+        {{ form.hidden_tag() }}
         <div class="form-group">
             {{ form.email.label }}
             {{ form.email(class = 'form-control') }}
