@@ -1,0 +1,13 @@
+.list-group-item{
+    margin-bottom: 10px;
+    background-color: aqua;
+}
+.form-group{
+    margin-bottom: 10px;
+} 
+
+#register-block{
+    position: relative;
+    width: 55%;
+    padding: 60px;
+}

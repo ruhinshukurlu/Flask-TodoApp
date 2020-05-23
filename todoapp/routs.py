@@ -1,8 +1,9 @@
-from flask import Flask,render_template
-from forms import RegisterForm, LoginForm
-app = Flask(__name__)
+from flask import render_template,redirect,url_for
+from todoapp.forms import RegisterForm, LoginForm
 
-app.config['SECRET_KEY'] = 'fct5hvxkmJkyKZfePxZ3EAW' 
+from todoapp import app,bcrypt,db
+
+
 
 tasks = [
     {
@@ -29,20 +30,18 @@ tasks = [
 def task():
     return render_template('tasks.html', tasks = tasks)
 
-@app.route('/register')
+@app.route('/register', methods = ['GET','POST'])
 def register():
     form = RegisterForm()
+    if form.validate_on_submit():
+        password_hash = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
+        user = User(username = form.username.data, email = form.email.data, password = password_hash)
+        db.session.add( user )
+        db.session.commit()
+        return redirect(url_for('login'))
     return render_template('accounts/register.html', form=form)
 
 @app.route('/login')
 def login():
     form = LoginForm()
     return render_template('accounts/login.html',form = form)
-
-@app.route('/about')
-def about():
-    return render_template('about.html')
-
-if __name__ == '__main__' :
-    app.run(debug=True)
-
