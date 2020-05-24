@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block page_title %}
+    Account
+{% endblock %}
+
+
+{% block content %}
+    <ul class = 'user-info-list' >
+        <li>
+            <label for="">Username : </label>
+            <p> {{user.username}} </p>
+        </li>
+        <li>
+            <label for="">Email : </label>
+            <p> {{ user.email }} </p>
+        </li>
+        <li>
+            <label for="">Password : </label>
+            <p> ************** </p>
+        </li>
+        <li>
+            <a class="btn btn-outline-success" href=" {{ url_for('update_user', user_id = current_user.id) }} " role="button">Edit</a>
+            <button type="button" class="btn btn-outline-danger " data-toggle="modal" data-target="#exampleModal">Delete account</button>
+        </li>
+    </ul>
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Delete Account?</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <form action=" {{ url_for('delete_user',user_id = current_user.id) }} " method="POST">
+            <input type="submit" value="Delete" class="btn btn-danger">
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock content %}

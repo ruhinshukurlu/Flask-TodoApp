@@ -16,7 +16,7 @@ class User(db.Model,UserMixin):
     tasks = db.relationship('Task', backref = 'owner', lazy = True)
 
     def __repr__(self):
-        return f'<User({self.username})>'
+        return f'{self.username}'
 
 class Task(db.Model):
     id = db.Column(db.Integer, primary_key = True)

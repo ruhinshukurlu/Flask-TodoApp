@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField,PasswordField, SubmitField, BooleanField
+from wtforms import StringField,PasswordField, SubmitField, BooleanField,TextAreaField,DateTimeField
 from wtforms.validators import DataRequired,Email,EqualTo,Length,ValidationError
 from todoapp.models import User
 
@@ -25,3 +25,13 @@ class LoginForm(FlaskForm):
     password =  PasswordField('Password',validators=[DataRequired()])
     remember = BooleanField('Remember me',default=False)
     submit = SubmitField('Login')
+
+class TaskForm( FlaskForm ):
+    title = StringField('Title', validators=[DataRequired()])
+    description = TextAreaField('Description', validators=[DataRequired()])
+    deadline = DateTimeField('Deadline')
+    submit = SubmitField('Save')
+
+# class SearchForm(FlaskForm):
+#     search_title = StringField(validators=[DataRequired(), Length(max=60)])
+#     search = SubmitField('Search')

@@ -11,3 +11,11 @@
     width: 55%;
     padding: 60px;
 }
+
+.user-info-list li{
+    display: flex;
+}
+
+.user-info-list p{
+    margin-left: 5px;
+}
