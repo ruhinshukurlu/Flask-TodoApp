@@ -1,0 +1,29 @@
+.detail-block{
+    display: flex;
+    flex-direction: column;
+    margin-top: 50px;
+}
+
+ul li{
+    list-style-type: none;
+    padding: 10px 0;
+}
+
+li:not(:last-child){
+    border-bottom: 1px solid #000;
+    
+}
+
+#register-block{
+    width: 90%;
+}
+
+.heading{
+    display: flex;
+    align-items: center;
+    padding: 10px;
+}
+.back-link{
+    font-size: 35px;
+    margin-right: 10px;
+}

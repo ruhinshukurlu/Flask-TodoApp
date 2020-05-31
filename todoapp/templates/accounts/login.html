@@ -5,20 +5,22 @@
 {% endblock %}
 
 {% block content %}
-    <form method="POST" action="">
-        {{ form.hidden_tag() }}
-        <div class="form-group">
-            {{ form.email.label }}
-            {{ form.email(class = 'form-control') }}
-        </div>
-        <div class="form-group">
-            {{ form.password.label }}
-            {{ form.password(class = 'form-control') }}
-        </div>
-        <div class="form-group">
-            {{ form.remember(class = 'form-check-input') }}
-            {{ form.remember.label(class = 'form-check-label') }}
-        </div>
-        {{ form.submit(class = 'btn btn-primary') }}
-    </form>
+    <div class="login-block">
+        <form method="POST" action="">
+            {{ form.hidden_tag() }}
+            <div class="form-group">
+                {{ form.email.label }}
+                {{ form.email(class = 'form-control') }}
+            </div>
+            <div class="form-group">
+                {{ form.password.label }}
+                {{ form.password(class = 'form-control') }}
+            </div>
+            <div class="form-group">
+                {{ form.remember(class = 'form-check-input') }}
+                {{ form.remember.label(class = 'form-check-label') }}
+            </div>
+            {{ form.submit(class = 'btn btn-primary') }}
+        </form>
+    </div>
 {% endblock content %}

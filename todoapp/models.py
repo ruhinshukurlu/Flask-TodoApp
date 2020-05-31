@@ -23,6 +23,7 @@ class Task(db.Model):
     title = db.Column(db.String(50), nullable = False)
     description = db.Column(db.Text, nullable = False)
     deadline = db.Column(db.DateTime, nullable = False, default = datetime.utcnow)
+    # complete = db.Column(db.Boolean)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable = False)
 
     def __repr__(self):

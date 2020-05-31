@@ -20,6 +20,14 @@ class RegisterForm( FlaskForm ):
         if user:
             raise ValidationError('This email address was taken. Please, take another one')
 
+class UpdateUserForm( FlaskForm ):
+    username = StringField('Username', validators=[DataRequired(), Length(min=8,max=30)])
+    email = StringField('Email', validators=[DataRequired(), Email()])
+    password =  PasswordField('Password',validators=[DataRequired()])
+    confirm_password = PasswordField('Confirm Password', validators=[DataRequired(),EqualTo('password')])
+    submit = SubmitField('Save changes')
+
+
 class LoginForm(FlaskForm):
     email = StringField('Email', validators=[DataRequired(), Email()])
     password =  PasswordField('Password',validators=[DataRequired()])

@@ -1,40 +1,74 @@
-{% extends 'base.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-2/css/all.min.css"> 
+  <link rel="stylesheet" href=" {{ url_for('static', filename = 'css/detail_page.css') }} ">
 
-{% block page_title %}
-    {{title}}
-{% endblock %}
-
-{% block content %}
-<div class="list-group">
-    <a href="#" class="list-group-item list-group-item-action ">
-        <div class="d-flex w-100 justify-content-between">
-        <h5 class="mb-1"> {{ task.title }} </h5>
-        <small> {{ task.deadline }} </small>
-        </div>
-        <p class="mb-1"> {{ task.description }} </p>
-        <small> Created by {{ task.owner }} </small>
-    </a>
-    <a class="btn btn-outline-success" href=" {{ url_for('update_task', task_id = task.id) }} " role="button">Update</a>
-    <button type="button" class="btn btn-outline-danger " data-toggle="modal" data-target="#exampleModal">Delete</button>
-
-</div>
-<!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
+  <title>Detail of Task</title>
+</head>
+<body>
+  
+  <div class="container">
+    <div class="detail-block">
+      <div class="heading">
+        <a href="/" class = back-link><i class="fas fa-arrow-circle-left"></i></a>
+        <h1>Todo Details</h1>
       </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <form action=" {{ url_for('delete_task',task_id = task.id) }} " method="POST">
-            <input type="submit" value="Delete" class="btn btn-danger">
-        </form>
+      <hr>
+      <ul>
+        <li><h3> {{task.title}} </h3></li>
+        <li>
+          <label for=""><strong>Description</strong></label>  
+          <p>{{task.description}}</p>        
+        </li>
+        <li>
+          <label for=""><strong>Deadline</strong></label>
+          <p>{{task.deadline}}</p>
+        </li>
+        <li>
+          <a href="/delete/{{task.id}}" class="btn btn-outline-danger" >
+            <i class="fas fa-trash-alt"></i>
+          </a>
+          <a style="margin-left: 10px;" href="/update/{{task.id}}" class="btn btn-outline-success" >
+            <i class="fas fa-pencil-alt"></i>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div class="row justify-content-center">
+      {% block content %}
+      {% endblock content %}
+    </div>
+  </div>
+
+  <div class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Are you sure to delete?</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary">
+            <a href="/delete/{{task.id}}" class="btn btn-outline-danger" >
+              <i class="fas fa-trash-alt"></i>
+            </a>
+          </button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
       </div>
     </div>
   </div>
-</div>
-{% endblock content %}
+
+
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+  <script src=" {{ url_for( 'static', filename = 'js/main.js' ) }} "></script>
+</body>
+</html>

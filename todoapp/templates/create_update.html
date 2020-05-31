@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'detail.html' %}
 
 {% block page_title %}
     {{ title }}
@@ -6,6 +6,9 @@
 
 {% block content %}
     <div id="register-block">
+        <div class="heading">
+            <h3>Update Todo</h3>
+        </div>
         <form method="POST" action="">
             {{ form.hidden_tag() }}
             <div class="form-group">

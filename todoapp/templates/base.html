@@ -8,7 +8,7 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-2/css/all.min.css">
     <link rel="stylesheet" href=" {{ url_for('static', filename = 'css/style.css') }} ">
 
     <title>{% block page_title %}{% endblock %}</title>
@@ -25,36 +25,27 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav mr-auto">
             {% if current_user.is_authenticated %}
-
-              <li class="nav-item active">
-                <a class="nav-link" href="{{ url_for('create_task') }} ">Create Task <span class="sr-only">(current)</span></a>
-              </li>
               <li class="nav-item active">
                 <a class="nav-link" href="{{ url_for('logout') }} ">Logout <span class="sr-only">(current)</span></a>
               </li>
               <li class="nav-item active">
-                <a class="nav-link" href="{{ url_for('account') }} "> {{ current_user.username }} <span class="sr-only">(current)</span></a>
+                <a class="nav-link" href="{{ url_for('account') }} "> <i class="fas fa-user-circle"></i>{{ current_user.username }} <span class="sr-only">(current)</span></a>
               </li>
+              
             {% else %}
               <li class="nav-item active">
-                <a class="nav-link" href="{{ url_for('register') }} ">Register <span class="sr-only">(current)</span></a>
+                <a class="nav-link" href="{{ url_for('register') }} ">Sign Up <span class="sr-only">(current)</span></a>
               </li>
               <li class="nav-item active">
-                <a class="nav-link" href="{{ url_for('login') }} ">Login</a>
+                <a class="nav-link" href="{{ url_for('login') }} ">Sign In</a>
               </li>
             {% endif %}
-            
-           
           </ul>
-          <form class="form-inline my-2 my-lg-0">
-            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-          </form>
         </div>
-      </nav>
-      
-      <div class="container">
+    </nav>
 
+    <main id = "main">
+      <div class="container">
           {% with messages = get_flashed_messages(with_categories = true) %}
             {% if messages %}
               <div class="row justify-content-center">
@@ -64,21 +55,83 @@
                   <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                   </button>
-            </div>
+                  </div>
                 {% endfor %}
               </div>
             {% endif %}
           {% endwith %}
-          
-          
-            
-          
 
           <div class="row justify-content-center">
             {% block content %}{% endblock %}
+
+            {% if current_user.is_authenticated %}
+             <form action="/add" class="taskForm" method="POST">
+                  <div class="form-group">
+                    <label for="formGroupExampleInput">Title</label>
+                    <input type="text" name="title" class="form-control" id="formGroupExampleInput" placeholder="Enter title...">
+                  </div>
+                  <div class="form-group">
+                    <label for="formGroupExampleInput2">Description</label>
+                    <textarea type="text" name="description" class="form-control" id="formGroupExampleInput2" placeholder="Enter description..."></textarea>
+                  </div>
+                  <div class="form-group">
+                      <label for="deadline">Deadline</label>
+                      <input type="text" id="deadline" class="form-control" name="deadline">
+                  </div>
+                  <button type="submit" class="btn btn-danger">Save</button>
+              </form>
+              
+              {% if current_user.tasks == [] %}
+                <div class="alert alert-warning" role="alert">
+                  You don't have any task
+                </div>
+              {% else %}
+                <table class="table">
+                  <thead class="thead-light">
+                    <tr>
+                      <th scope="col">Title</th>
+                      <th scope="col">Description</th>
+                      <th scope="col">Deadline</th>
+                      <th scope="col">Edit</th>
+                      <th scope="col">Delete</th>
+                      <th scope="col">
+                        <form action="/search" class="form-inline my-2 my-lg-0" method="POST">
+                          <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="search_word">
+                          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                        </form>
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for task in tasks %}
+                      <tr>
+                          <td> {{task.title}} </td>
+                          <td ><p class="description"> {{task.description}} </p></td>
+                          <td> {{task.deadline}} </td>
+                          <td>
+                              <a href="/detail/{{task.id}}" class="btn btn-outline-success">
+                                  <i class="fas fa-edit"></i>
+                              </a>
+                          </td>
+                          <td>
+                              <a href="/delete/{{task.id}}" class="btn btn-outline-danger" >
+                                  <i class="fas fa-trash-alt"></i>
+                              </a>
+                          </td>
+                      </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+              {% endif %}
+            
+            {% endif %}
+
           </div>
       </div>
 
+    
+    </main>  
+      
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
